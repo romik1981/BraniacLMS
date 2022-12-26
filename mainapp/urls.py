@@ -1,25 +1,15 @@
-from django.views.generic import TemplateView
+from django.urls import path
 
+from mainapp import views
+from mainapp.apps import MainappConfig
 
-class MainPageView(TemplateView):
-    template_name = "mainapp/index.html"
+app_name = MainappConfig.name
 
-
-class NewsPageView(TemplateView):
-    template_name = "mainapp/news.html"
-
-
-class CoursesPageView(TemplateView):
-    template_name = "mainapp/courses_list.html"
-
-
-class ContactsPageView(TemplateView):
-    template_name = "mainapp/contacts.html"
-
-
-class DocSitePageView(TemplateView):
-    template_name = "mainapp/doc_site.html"
-
-
-class LoginPageView(TemplateView):
-    template_name = "mainapp/login.html"
+urlpatterns = [
+    path("", views.MainPageView.as_view()),
+    path("news/", views.NewsPageView.as_view()),
+    path("courses/", views.CoursesPageView.as_view()),
+    path("contacts/", views.ContactsPageView.as_view()),
+    path("doc_site/", views.DocSitePageView.as_view()),
+    path("login/", views.LoginPageView.as_view()),
+]
