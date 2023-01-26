@@ -11,6 +11,12 @@ from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView, View
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from django.template.loader import render_to_string
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView
 
 from mainapp import forms as mainapp_forms
 from mainapp import models as mainapp_models
@@ -92,6 +98,9 @@ class CoursesDetailView(TemplateView):
         else:
             context["feedback_list"] = cached_feedback
 
+        context["feedback_list"] = mainapp_models.CourseFeedback.objects.filter(
+            course=context["course_object"]
+        ).order_by("-created", "-rating")[:5]
         return context
 
 

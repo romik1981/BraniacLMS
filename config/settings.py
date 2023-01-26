@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     "mainapp",
     "authapp",
     "crispy_forms",
-    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
