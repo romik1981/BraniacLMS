@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+
+{% load static markdownify crispy_forms_tags cache %}
+
 {% load static markdownify crispy_forms_tags %}
 
 {% block title %}
@@ -40,6 +43,8 @@
           <span style="font-size: 30pt;">
             {{ course_object.cost}}
           </span><br>
+          <a href="#" class="btn btn-outline-primary btn-block"
+            role="button">Купить</a>
           <a href="#" class="btn btn-outline-primary btn-block" role="button">Купить</a>
         </p>
       </div>
@@ -51,16 +56,22 @@
       <span style="font-size: 30pt;">
         {{ course_object.cost}}
       </span><br>
+      <a href="#" class="btn btn-outline-primary btn-block"
+        role="button">Купить</a>
       <a href="#" class="btn btn-outline-primary btn-block" role="button">Купить</a>
     </p>
   </div>
 </div>
 <div class="accordion" id="accordionLessons">
 
+  {% cache 300 lessons %}
   {% for item in lessons %}
   <div class="card">
     <div class="card-header" id="headLessonPk{{ item.pk }}">
       <h2 class="mb-0">
+        <button class="btn btn-link btn-block text-left" type="button"
+          data-toggle="collapse" data-target="#collapse{{ item.pk }}"
+          aria-expanded="true" aria-controls="collapse{{ item.pk }}">
         <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
           data-target="#collapse{{ item.pk }}" aria-expanded="true" aria-controls="collapse{{ item.pk }}">
           {{ item.course.name }} - {{ item.title }}
@@ -68,6 +79,8 @@
       </h2>
     </div>
 
+    <div id="collapse{{ item.pk }}" class="collapse"
+      aria-labelledby="headLessonPk{{ item.pk }}"
     <div id="collapse{{ item.pk }}" class="collapse" aria-labelledby="headLessonPk{{ item.pk }}"
       data-parent="#accordionLessons">
       <div class="card-body">
@@ -87,6 +100,7 @@
     </div>
   </div>
   {% endfor %}
+  {% endcache %}
 
 </div>
 <h3>Отзывы</h3>
@@ -110,6 +124,13 @@
     <h6 class="card-subtitle mb-2 text-muted">Вы ещё не оставляли отзыв к этому
       курсу</h6>
     <p class="card-text">
+    <form action="{% url 'mainapp:course_feedback' %}" method="POST"
+      id="feedbackForm">
+      {% csrf_token %}
+      {{ feedback_form|crispy }}
+    </form>
+    <button id="feedbackSubmit"
+      class="btn btn-primary btn-block">Отправить</button>
     <form action="{% url 'mainapp:course_feedback' %}" method="POST" id="feedbackForm">
       {% csrf_token %}
       {{ feedback_form|crispy }}
