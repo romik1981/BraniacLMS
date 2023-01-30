@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
+
 {% load static markdownify crispy_forms_tags cache %}
+
+{% load static markdownify crispy_forms_tags cache %}
+
+{% load static markdownify crispy_forms_tags %}
 
 {% block title %}
 {{ course_object.name }}
@@ -42,6 +47,7 @@
           </span><br>
           <a href="#" class="btn btn-outline-primary btn-block"
             role="button">Купить</a>
+          <a href="#" class="btn btn-outline-primary btn-block" role="button">Купить</a>
         </p>
       </div>
     </div>
@@ -54,6 +60,7 @@
       </span><br>
       <a href="#" class="btn btn-outline-primary btn-block"
         role="button">Купить</a>
+      <a href="#" class="btn btn-outline-primary btn-block" role="button">Купить</a>
     </p>
   </div>
 </div>
@@ -67,6 +74,8 @@
         <button class="btn btn-link btn-block text-left" type="button"
           data-toggle="collapse" data-target="#collapse{{ item.pk }}"
           aria-expanded="true" aria-controls="collapse{{ item.pk }}">
+        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+          data-target="#collapse{{ item.pk }}" aria-expanded="true" aria-controls="collapse{{ item.pk }}">
           {{ item.course.name }} - {{ item.title }}
         </button>
       </h2>
@@ -74,6 +83,7 @@
 
     <div id="collapse{{ item.pk }}" class="collapse"
       aria-labelledby="headLessonPk{{ item.pk }}"
+    <div id="collapse{{ item.pk }}" class="collapse" aria-labelledby="headLessonPk{{ item.pk }}"
       data-parent="#accordionLessons">
       <div class="card-body">
         <div class="row justify-content-center">
@@ -123,6 +133,11 @@
     </form>
     <button id="feedbackSubmit"
       class="btn btn-primary btn-block">Отправить</button>
+    <form action="{% url 'mainapp:course_feedback' %}" method="POST" id="feedbackForm">
+      {% csrf_token %}
+      {{ feedback_form|crispy }}
+    </form>
+    <button id="feedbackSubmit" class="btn btn-primary btn-block">Отправить</button>
     </p>
   </div>
 </div>
