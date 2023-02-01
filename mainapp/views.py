@@ -111,7 +111,7 @@ class CoursesDetailView(TemplateView):
 
         else:
             context["feedback_list"] = cached_feedback
-
+            
         return context
 
 
