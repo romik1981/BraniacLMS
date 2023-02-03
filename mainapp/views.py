@@ -12,13 +12,6 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView, View
 
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
-from django.template.loader import render_to_string
-from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView
-
 from mainapp import forms as mainapp_forms
 from mainapp import models as mainapp_models
 from mainapp import tasks as mainapp_tasks
@@ -47,7 +40,6 @@ class NewsCreateView(PermissionRequiredMixin, CreateView):
 
 class NewsDetailView(DetailView):
     model = mainapp_models.News
-
 
 
 class NewsDetailView(DetailView):
@@ -111,7 +103,7 @@ class CoursesDetailView(TemplateView):
 
         else:
             context["feedback_list"] = cached_feedback
-            
+
         return context
 
 
